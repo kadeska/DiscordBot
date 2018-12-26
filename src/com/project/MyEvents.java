@@ -8,7 +8,9 @@ public class MyEvents {
 	@EventSubscriber
 	public void onMessageReceived(MessageReceivedEvent event) {
 		if (event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
+		{
 			BotUtils.sendMessage(event.getChannel(), "I am sending a message from an EventSubscriber listener");
-	}
+		}
+		}
 
 }
