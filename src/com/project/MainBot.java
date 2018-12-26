@@ -1,5 +1,8 @@
 package com.project;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.util.DiscordException;
@@ -18,11 +21,22 @@ public class MainBot {
 		
 		token = args[0];
 
-		createClient(token, true);
+		
 		// clientBuilder.login();
 		IDiscordClient client = BotUtils.getBuiltDiscordClient(token);
 
 		client.getDispatcher().registerListener(new MyEvents());
+		
+		client.login();
+		
+		try {
+			GoogleSheetManager.start();
+		} catch (IOException | GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//createClient(token, false);
 
 		/*
 		 * RequestBuffer.request(() -> { // Ratelimited methods go here client.login();
