@@ -8,34 +8,32 @@ import sx.blah.discord.util.RequestBuilder;
 
 public class MainBot {
 	private static ClientBuilder clientBuilder;
-	private static final String token = "NDE1MjUzNzI3MTYzNzExNDg5.DwMe4Q.V909YiWFM4LwTLwk-Xu5nA5omF0";
+	private static String token;
 
 	public static void main(String[] args) {
-		/*
-		 * if(args.length != 1){ System.out.
-		 * println("Please enter the bots token as the first argument e.g java -jar thisjar.jar tokenhere"
-		 * ); return; }
-		 */
+		if (args.length != 1) {
+			System.out.println("Please enter the bots token as the first argument e.g java -jar thisjar.jar tokenhere");
+			return;
+		}
+		
+		token = args[1];
+
 		createClient(token, true);
-		//clientBuilder.login();
+		// clientBuilder.login();
 		IDiscordClient client = BotUtils.getBuiltDiscordClient(token);
 
 		client.getDispatcher().registerListener(new MyEvents());
 
 		/*
-		RequestBuffer.request(() -> {
-			// Ratelimited methods go here
-			client.login();
-		});
-		*/
-		 
+		 * RequestBuffer.request(() -> { // Ratelimited methods go here client.login();
+		 * });
+		 */
 
-		/*RequestBuilder builder = new RequestBuilder(client);
-		builder.shouldBufferRequests(true);
-		builder.doAction(() -> {
-			client.login();
-			return true;
-		}).execute();*/
+		/*
+		 * RequestBuilder builder = new RequestBuilder(client);
+		 * builder.shouldBufferRequests(true); builder.doAction(() -> { client.login();
+		 * return true; }).execute();
+		 */
 
 	}
 
