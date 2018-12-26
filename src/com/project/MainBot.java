@@ -16,7 +16,7 @@ public class MainBot {
 			return;
 		}
 		
-		token = args[1];
+		token = args[0];
 
 		createClient(token, true);
 		// clientBuilder.login();
