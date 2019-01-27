@@ -87,21 +87,21 @@ public class GoogleSheetManager {
 		}*/
 	}
 
-	public static void update(String user, String message, String timestamp) throws IOException, GeneralSecurityException, InterruptedException {
+	public static void update(String label, String user, String message, String timestamp) throws IOException, GeneralSecurityException, InterruptedException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 		Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
 				.setApplicationName(APPLICATION_NAME).build();
 		
 		//Find next empty row
 		int x = 2;
-		String startRange = "Suggestions!A" + x + ":D";
+		String startRange = label + "!A" + x + ":D";
 		Thread.sleep(2000);
 		ValueRange response = service.spreadsheets().values().get(spreadsheetId, startRange).execute();
 		List<List<Object>> values = response.getValues();
 		for(int i = 0; values != null; i++) {
 			System.out.println(i + " " + startRange);
 			x++;
-			startRange = "Suggestions!A" + x + ":D";
+			startRange = label + "!A" + x + ":D";
 			response = service.spreadsheets().values().get(spreadsheetId, startRange).execute();
 			values = response.getValues();
 		}

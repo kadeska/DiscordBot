@@ -13,19 +13,36 @@ public class MyEvents implements IListener<Event> {
 	@Override
 	public void handle(Event event) {
 		if (event instanceof MessageReceivedEvent) {
+			MessageEvent ev = (MessageReceivedEvent) event;
 			// suggest command
 			if ((((MessageReceivedEvent) event).getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "suggest"))) {
 				if (((MessageReceivedEvent) event).getChannel().getName().equalsIgnoreCase("suggestions")) {
-					BotUtils.sendMessage(((MessageEvent) event).getChannel(), "I have sent your suggestions");
-					MessageEvent ev = (MessageReceivedEvent) event;
 					String message = ev.getMessage().getContent().substring(8);
 					try {
-						GoogleSheetManager.update(ev.getAuthor().getName(), message,
+						GoogleSheetManager.update("Suggestions", ev.getAuthor().getName(), message,
 								ev.getMessage().getTimestamp().toString());
 					} catch (IOException | GeneralSecurityException | InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					BotUtils.sendMessage(((MessageEvent) event).getChannel(), "I have sent your suggestions");
+				}
+			}
+			
+			// report-bug command
+			if ((((MessageReceivedEvent) event).getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "report-bug"))) {
+				if (((MessageReceivedEvent) event).getChannel().getName().equalsIgnoreCase("bug_reports")) {
+					String message = ev.getMessage().getContent().substring(11);
+					try {
+						GoogleSheetManager.update("Bug_reports", ev.getAuthor().getName(), message,
+								ev.getMessage().getTimestamp().toString());
+					} catch (IOException | GeneralSecurityException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					BotUtils.sendMessage(((MessageEvent) event).getChannel(), "I have sent your bug report");
 				}
 			}
 
