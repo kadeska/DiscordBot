@@ -32,7 +32,7 @@ public class MyEvents implements IListener<Event> {
 			
 			// report-bug command
 			if ((((MessageReceivedEvent) event).getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "report-bug"))) {
-				if (((MessageReceivedEvent) event).getChannel().getName().equalsIgnoreCase("bug_reports")) {
+				if (((MessageReceivedEvent) event).getChannel().getName().equalsIgnoreCase("bugs")) {
 					String message = ev.getMessage().getContent().substring(11);
 					try {
 						GoogleSheetManager.update("Bug_reports", ev.getAuthor().getName(), message,
